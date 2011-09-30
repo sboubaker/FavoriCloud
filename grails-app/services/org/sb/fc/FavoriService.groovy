@@ -4,14 +4,20 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 
+import org.sb.fc.Favori
+import org.sb.fc.User
+
 class FavoriService {
 
-    static transactional = 'mongo'
+	static transactional = 'mongo'
 
 	def userService
 	
-	def saveFavori(Favori favori){
+	def saveFavori(Favori favori ,ObjectId id){
+		User user= User.findById(id);
 		favori.save(flush: true);
+		user.addToFavoris(favori);
+		userService.saveUser(user);
 	}
 	def updateUser(User favori){
 		favori.update();
@@ -19,9 +25,9 @@ class FavoriService {
 	def deleteFavori(Favori favori){
 		favori.delete(flush: true);
 	}
-	def listFavorisByUserId (String id){
-		User user= User.findById(ObjectId.massageToObjectId(id));
-		if(!user)
+	def listFavorisByUserId (ObjectId id){
+		User user= User.findById(id);
+		if(user)
 		user.favoris
 		else
 		null
@@ -31,10 +37,5 @@ class FavoriService {
 	}
 	def count = {
 		Favori.count();
-	}
-	def addFavoriToUser(Favori favori,User user){
-		saveFavori(favori)
-		user.addToFavoris(favori);
-		userService.saveUser(user);
 	}
 }

@@ -2,6 +2,9 @@ package org.sb.fc
 
 import org.bson.types.ObjectId
 
+import org.sb.fc.Favori
+import org.sb.fc.User
+
 class UserService {
 
 	static transactional = 'mongo'

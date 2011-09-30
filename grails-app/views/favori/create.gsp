@@ -12,6 +12,7 @@
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
+        	<span class="menuButton"><g:link class="list" controller="user" action="logout">Logout</g:link></span>
         </div>
         <div class="body">
             <h1><g:message code="default.create.label" args="[entityName]" /></h1>
@@ -27,8 +28,7 @@
                 <div class="dialog">
                     <table>
                         <tbody>
-                        
-                            <tr class="prop">
+                        <!--<tr class="prop">
                                 <td valign="top" class="name">
                                     <label for="owner"><g:message code="favori.owner.label" default="Owner" /></label>
                                 </td>
@@ -36,6 +36,7 @@
                                     <g:select name="owner.id" from="${org.sb.fc.User.list()}" optionKey="id" value="${favoriInstance?.owner?.id}"  />
                                 </td>
                             </tr>
+                       -->
                         
                             <tr class="prop">
                                 <td valign="top" class="name">

@@ -1,9 +1,12 @@
 package org.sb.fc
 
+import org.sb.fc.Authority
+import org.sb.fc.Status
+
 import org.bson.types.ObjectId
 
 class User {
-    ObjectId id
+	ObjectId id
 	String email
 	String username
 	String password
