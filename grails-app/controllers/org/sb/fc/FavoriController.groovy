@@ -7,17 +7,25 @@ class FavoriController {
 
 	def favoriService
 	def userService
-	
-	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-	
+
+	static allowedMethods = [save: "POST", update: "POST", delete: "GET"]
+
 	def index = {
 		redirect(action: "list", params: params)
 	}
 
 	def list = {
-		[favoriInstanceList: favoriService.listFavorisByUserId(session.uid), favoriInstanceTotal: Favori.count()]
+		def data = [favoriInstanceList: favoriService.listFavorisByUserId(session.uid), favoriInstanceTotal: Favori.count()]
+		if(params.json && params.json == "json"){
+			render(contentType: "text/json") {json = data}
+		}else{
+			data
+		}
 	}
-
+	def listall = {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		[favoriInstanceList: favoriService.listFavoris(params), favoriInstanceTotal: favoriService.count()]
+	}
 	def create = {
 		def favoriInstance = new Favori()
 		favoriInstance.properties = params
@@ -28,12 +36,11 @@ class FavoriController {
 		def favoriInstance = new Favori(params)
 		if (favoriService.saveFavori(favoriInstance,session.uid)) {
 			flash.message = "${message(code: 'default.created.message', args: [message(code: 'favori.label', default: 'Favori'), favoriInstance.id])}"
-			redirect(action: "show", id: favoriInstance.id)
+			redirect(action: "list")
 		}
 		else {
 			render(view: "create", model: [favoriInstance: favoriInstance])
 		}
-		
 	}
 
 	def show = {
@@ -64,8 +71,10 @@ class FavoriController {
 			if (params.version) {
 				def version = params.version.toLong()
 				if (favoriInstance.version > version) {
-					
-					favoriInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'favori.label', default: 'Favori')] as Object[], "Another user has updated this Favori while you were editing")
+
+					favoriInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [
+						message(code: 'favori.label', default: 'Favori')]
+					as Object[], "Another user has updated this Favori while you were editing")
 					render(view: "edit", model: [favoriInstance: favoriInstance])
 					return
 				}

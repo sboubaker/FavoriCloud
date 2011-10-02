@@ -1,10 +1,12 @@
 package org.sb.fc
 
+import grails.converters.*
+
 class AdminController {
 	
 	def userService
 	
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	
     def index = {
         redirect(action: "list", params: params)
@@ -14,8 +16,7 @@ class AdminController {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         [userInstanceList: userService.listUsers(params) , userInstanceTotal: userService.count()]
     }
-
-    def create = {
+	def create = {
         def userInstance = new User()
         userInstance.properties = params
         return [userInstance: userInstance]

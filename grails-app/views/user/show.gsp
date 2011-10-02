@@ -8,67 +8,88 @@
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
-        <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
-        	<span class="menuButton"><g:link class="list" controller="user" action="logout">Logout</g:link></span>
-        </div>
-        <div class="body">
+        <div class="topbar-wrapper" style="z-index: 5;">
+		<div class="topbar" data-dropdown="dropdown">
+			<div class="topbar-inner">
+				<div class="container">
+					<h3>
+						<a href="#">FCloud</a>
+					</h3>
+					<ul class="nav">
+						<li><a class="active" href="${createLink(uri: '/')}"><g:message
+									code="default.home.label" /> </a>
+						</li>
+						<li><g:link action="create">
+								<g:message code="default.new.label" args="[entityName]" />
+							</g:link>
+						</li>
+						<li><g:link controller="user" action="logout">Logout</g:link>
+						</li>
+					</ul>
+					<form class="pull-left" action="">
+						<input type="text" placeholder="Search">
+					</form>
+				</div>
+			</div>
+			<!-- /topbar-inner -->
+		</div>
+		<!-- /topbar -->
+	</div>
+		<div class="container">
             <h1><g:message code="default.show.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            <div class="dialog">
+            <div >
                 <table>
                     <tbody>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.id.label" default="Id" /></td>
+                        <tr >
+                            <td valign="top" ><g:message code="user.id.label" default="Id" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.accountExpired.label" default="Account Expired" /></td>
-                            
-                            <td valign="top" class="value"><g:formatBoolean boolean="${userInstance?.accountExpired}" /></td>
+                            <td valign="top" >${fieldValue(bean: userInstance, field: "id")}</td>
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.accountLocked.label" default="Account Locked" /></td>
+                        <tr >
+                            <td valign="top" ><g:message code="user.accountExpired.label" default="Account Expired" /></td>
                             
-                            <td valign="top" class="value"><g:formatBoolean boolean="${userInstance?.accountLocked}" /></td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.authority.label" default="Authority" /></td>
-                            
-                            <td valign="top" class="value">${userInstance?.authority?.encodeAsHTML()}</td>
+                            <td valign="top" ><g:formatBoolean boolean="${userInstance?.accountExpired}" /></td>
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.email.label" default="Email" /></td>
+                        <tr >
+                            <td valign="top" ><g:message code="user.accountLocked.label" default="Account Locked" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "email")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.enabled.label" default="Enabled" /></td>
-                            
-                            <td valign="top" class="value"><g:formatBoolean boolean="${userInstance?.enabled}" /></td>
+                            <td valign="top" ><g:formatBoolean boolean="${userInstance?.accountLocked}" /></td>
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.favoris.label" default="Favoris" /></td>
+                        <tr >
+                            <td valign="top" ><g:message code="user.authority.label" default="Authority" /></td>
                             
-                            <td valign="top" style="text-align: left;" class="value">
+                            <td valign="top" >${userInstance?.authority?.encodeAsHTML()}</td>
+                            
+                        </tr>
+                    
+                        <tr >
+                            <td valign="top" ><g:message code="user.email.label" default="Email" /></td>
+                            
+                            <td valign="top" >${fieldValue(bean: userInstance, field: "email")}</td>
+                            
+                        </tr>
+                    
+                        <tr >
+                            <td valign="top" ><g:message code="user.enabled.label" default="Enabled" /></td>
+                            
+                            <td valign="top" ><g:formatBoolean boolean="${userInstance?.enabled}" /></td>
+                            
+                        </tr>
+                    
+                        <tr >
+                            <td valign="top" ><g:message code="user.favoris.label" default="Favoris" /></td>
+                            
+                            <td valign="top" style="text-align: left;" >
                                 <ul>
                                 <g:each in="${userInstance.favoris}" var="f">
                                     <li><g:link controller="favori" action="show" id="${f.id}">${f?.encodeAsHTML()}</g:link></li>
@@ -78,43 +99,44 @@
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.password.label" default="Password" /></td>
+                        <tr >
+                            <td valign="top" ><g:message code="user.password.label" default="Password" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "password")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.passwordExpired.label" default="Password Expired" /></td>
-                            
-                            <td valign="top" class="value"><g:formatBoolean boolean="${userInstance?.passwordExpired}" /></td>
+                            <td valign="top" >${fieldValue(bean: userInstance, field: "password")}</td>
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.status.label" default="Status" /></td>
+                        <tr >
+                            <td valign="top" ><g:message code="user.passwordExpired.label" default="Password Expired" /></td>
                             
-                            <td valign="top" class="value">${userInstance?.status?.encodeAsHTML()}</td>
+                            <td valign="top" ><g:formatBoolean boolean="${userInstance?.passwordExpired}" /></td>
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="user.username.label" default="Username" /></td>
+                        <tr >
+                            <td valign="top" ><g:message code="user.status.label" default="Status" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: userInstance, field: "username")}</td>
+                            <td valign="top" >${userInstance?.status?.encodeAsHTML()}</td>
+                            
+                        </tr>
+                    
+                        <tr >
+                            <td valign="top" ><g:message code="user.username.label" default="Username" /></td>
+                            
+                            <td valign="top" >${fieldValue(bean: userInstance, field: "username")}</td>
                             
                         </tr>
                     
                     </tbody>
                 </table>
             </div>
-            <div class="buttons">
+            <div ><center>
                 <g:form>
                     <g:hiddenField name="id" value="${userInstance?.id}" />
-                    <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
-                    <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
+                    <span ><g:actionSubmit class="btn" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
+                    
                 </g:form>
+</center>
             </div>
         </div>
     </body>

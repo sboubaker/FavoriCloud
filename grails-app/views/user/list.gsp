@@ -13,13 +13,13 @@
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         	<span class="menuButton"><g:link class="list" controller="user" action="logout">Logout</g:link></span>
         </div>
-        <div class="body">
+        <div class="container">
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
-            <div class="list">
-                <table>
+            <div>
+                <table class="zebra-striped">
                     <thead>
                         <tr>
                         
@@ -39,7 +39,7 @@
                     </thead>
                     <tbody>
                     <g:each in="${userInstanceList}" status="i" var="userInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                        <tr>
                         
                             <td><g:link action="show" id="${userInstance.id}">${fieldValue(bean: userInstance, field: "id")}</g:link></td>
                         

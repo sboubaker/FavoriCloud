@@ -2,6 +2,8 @@ package org.sb.fc
 
 import org.sb.fc.User
 
+
+
 class UserController {
 
 	def userService
@@ -19,10 +21,14 @@ class UserController {
 
 	def save = {
 		def userInstance = new User(params)
+		userInstance.enabled=true
+		userInstance.accountExpired=false
+		userInstance.accountLocked=true
+		userInstance.passwordExpired=false
 		userInstance.authority=Authority.USER
 		if (userService.saveUser(userInstance)) {
 			flash.message = "${message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
-			redirect(action: "show", id: userInstance.id)
+			redirect(action: "login")
 		}
 		else {
 			render(view: "create", model: [userInstance: userInstance])
@@ -91,15 +97,12 @@ class UserController {
 	}
 	def authenticate = {
 		User user= userService.getUserByEmail(params.email)
+		if(!user){
+		user= userService.getUserByUsername(params.email)
+		}
 		if(user){
-			if(session.username == user.username){
-				if(session.authority== Authority.USER){
-						redirect(controller: "favori", action: "list",id: session.uid)
-					}else{
-						redirect(controller: "admin", action: "list")
-					}
-			}else{
-				if(user.password == params.password ){
+			if(user.password == params.password ){
+					if(!user.accountLocked){
 					session.username = user.username
 					session.authority = user.authority
 					session.uid = user.id
@@ -108,11 +111,15 @@ class UserController {
 					}else{
 						redirect(controller: "admin", action: "list")
 					}
+					}else{
+					flash.message = "${message(code: 'error.account.locked')}"
+					redirect(action: "login")
+					}
 				}else{
 					flash.message = "${message(code: 'error.password.message')}"
 					redirect(action: "login")
 				}
-			}
+			
 		}else{
 			flash.message = "${message(code: 'error.email.message')}"
 			redirect(action: "login")

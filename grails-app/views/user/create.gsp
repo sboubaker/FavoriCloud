@@ -9,13 +9,21 @@
         <title><g:message code="default.create.label" args="[entityName]" /></title>
     </head>
     <body>
-        <div class="nav">
-            <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-        	<span class="menuButton"><g:link class="list" controller="user" action="logout">Logout</g:link></span>
-        </div>
-        <div class="body">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+        <div class="topbar-wrapper" style="z-index: 5;">
+		<div class="topbar" data-dropdown="dropdown">
+			<div class="topbar-inner">
+				<div class="container">
+					<h3>
+						<a href="#">FCloud</a>
+					</h3>
+				</div>
+			</div>
+			<!-- /topbar-inner -->
+		</div>
+		<!-- /topbar -->
+	</div>
+	<div class="container">
+            <h1><g:message code="default.inscription.label" default="Inscription" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -25,96 +33,44 @@
             </div>
             </g:hasErrors>
             <g:form action="save" >
-                <div class="dialog">
-                    <table>
+                <div>
+                    <table class="zebra-striped">
                         <tbody>
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="accountExpired"><g:message code="user.accountExpired.label" default="Account Expired" /></label>
+                            <tr>
+                                <td valign="top" >
+                                    <label for="username"><g:message code="user.username.label" default="Username" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'accountExpired', 'errors')}">
-                                    <g:checkBox name="accountExpired" value="${userInstance?.accountExpired}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="accountLocked"><g:message code="user.accountLocked.label" default="Account Locked" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'accountLocked', 'errors')}">
-                                    <g:checkBox name="accountLocked" value="${userInstance?.accountLocked}" />
+                                <td valign="top" >
+                                    <g:textField name="username" value="${userInstance?.username}" />
                                 </td>
                             </tr>
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="authority"><g:message code="user.authority.label" default="Authority" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'authority', 'errors')}">
-                                    <g:select name="authority" from="${org.sb.fc.Authority?.values()}" keys="${org.sb.fc.Authority?.values()*.name()}" value="${userInstance?.authority?.name()}"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
+                            <tr>
+                                <td valign="top" >
                                     <label for="email"><g:message code="user.email.label" default="Email" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'email', 'errors')}">
+                                <td valign="top" >
                                     <g:textField name="email" value="${userInstance?.email}" />
                                 </td>
                             </tr>
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="enabled"><g:message code="user.enabled.label" default="Enabled" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'enabled', 'errors')}">
-                                    <g:checkBox name="enabled" value="${userInstance?.enabled}" />
-                                </td>
-                            </tr>
+                            
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
+                            <tr>
+                                <td valign="top" >
                                     <label for="password"><g:message code="user.password.label" default="Password" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'password', 'errors')}">
+                                <td valign="top" >
                                     <g:textField name="password" value="${userInstance?.password}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="passwordExpired"><g:message code="user.passwordExpired.label" default="Password Expired" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'passwordExpired', 'errors')}">
-                                    <g:checkBox name="passwordExpired" value="${userInstance?.passwordExpired}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="status"><g:message code="user.status.label" default="Status" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'status', 'errors')}">
-                                    <g:select name="status" from="${org.sb.fc.Status?.values()}" keys="${org.sb.fc.Status?.values()*.name()}" value="${userInstance?.status?.name()}"  />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="username"><g:message code="user.username.label" default="Username" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'username', 'errors')}">
-                                    <g:textField name="username" value="${userInstance?.username}" />
                                 </td>
                             </tr>
                         
                         </tbody>
                     </table>
                 </div>
-                <div class="buttons">
-                    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
+                <div ><center>
+                    <span><g:submitButton name="create" class="btn" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span></center>
                 </div>
             </g:form>
         </div>

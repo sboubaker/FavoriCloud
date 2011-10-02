@@ -21,7 +21,16 @@ class UserFilters {
 			}
 			
 		}
-		userFavoriCkeck(controller:'favori', action:'*') {
+		rootFavoriCkeck(controller:'favori', action:'(listall)') {
+			before = {
+				if(! (session.username && session.authority == Authority.ROOT )) {
+					redirect(controller:"user", action:"login")
+					return false
+				  }
+			}
+			
+		}
+		userFavoriCkeck(controller:'favori', action:'(index|show|list|edit|update|delete)') {
 			before = {
 				if(! (session.username && session.authority == Authority.USER)) {
 					redirect(controller:"user", action:"login")
@@ -30,6 +39,16 @@ class UserFilters {
 			}
 			
 		}
+		allFavoriCkeck(controller:'favori', action:'(show)') {
+			before = {
+				if(! (session.username)) {
+					redirect(controller:"user", action:"login")
+					return false
+				  }
+			}
+			
+		}
+		
     }
     
 }

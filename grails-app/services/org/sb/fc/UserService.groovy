@@ -12,6 +12,9 @@ class UserService {
 	def getUserByEmail(String email) {
 		User.findByEmail(email);
 	}
+	def getUserByUsername(String name) {
+		User.findByUsername(name);
+	}
 	def getUserById(String id) {
 		User.findById(ObjectId.massageToObjectId(id));
 	}

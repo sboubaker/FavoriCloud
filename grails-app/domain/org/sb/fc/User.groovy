@@ -14,7 +14,6 @@ class User {
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
-	Status status
 	Authority authority
 	static hasMany = [ favoris : Favori ]
 	static constraints = {
