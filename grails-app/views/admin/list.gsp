@@ -6,8 +6,7 @@
 <meta name="layout" content="main" />
 <g:set var="entityName"
 	value="${message(code: 'user.label', default: 'User')}" />
-<title><g:message code="default.list.label" args="[entityName]" />
-</title>
+<title>FCloud</title>
 </head>
 <body>
 	<div class="topbar-wrapper" style="z-index: 5;">
@@ -43,9 +42,9 @@
 	</div>
 
 	<div class="container">
-		<h1>
-			<g:message code="default.list.label" args="[entityName]" />
-		</h1>
+		<h2>
+			<g:message code="default.list.user.label" />
+		</h2>
 		<g:if test="${flash.message}">
 			<div class="message">
 				${flash.message}

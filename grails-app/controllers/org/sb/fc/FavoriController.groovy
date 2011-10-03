@@ -11,20 +11,22 @@ class FavoriController {
 	static allowedMethods = [save: "POST", update: "POST", delete: "GET"]
 
 	def index = {
-		redirect(action: "list", params: params)
+		redirect(action: "list")
 	}
 
 	def list = {
-		def data = [favoriInstanceList: favoriService.listFavorisByUserId(session.uid), favoriInstanceTotal: Favori.count()]
-		if(params.json && params.json == "json"){
+		//params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		println favoriService.listFavorisByUserId(session.uid)
+		[favoriInstanceList: favoriService.listFavorisByUserId(session.uid), favoriInstanceTotal: favoriService.countByUserId(session.uid)]
+		/*if(params.json && params.json == "json"){
 			render(contentType: "text/json") {json = data}
 		}else{
 			data
-		}
+		}*/
 	}
 	def listall = {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		[favoriInstanceList: favoriService.listFavoris(params), favoriInstanceTotal: favoriService.count()]
+		[favoriInstanceList: favoriService.listFavoris(params), favoriInstanceTotal: Favori.count()]
 	}
 	def create = {
 		def favoriInstance = new Favori()
@@ -34,8 +36,11 @@ class FavoriController {
 
 	def save = {
 		def favoriInstance = new Favori(params)
+		favoriInstance.dtCreate=new Date()
+		favoriInstance.dtUpdate=new Date()
+		favoriInstance.isdeleted=false
 		if (favoriService.saveFavori(favoriInstance,session.uid)) {
-			flash.message = "${message(code: 'default.created.message', args: [message(code: 'favori.label', default: 'Favori'), favoriInstance.id])}"
+			flash.message = "${message(code: 'default.created.message', args: [message(code: 'favori.label', default: 'Favori')])}"
 			redirect(action: "list")
 		}
 		else {
@@ -57,7 +62,7 @@ class FavoriController {
 	def edit = {
 		def favoriInstance = Favori.get(params.id)
 		if (!favoriInstance) {
-			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'favori.label', default: 'Favori'), params.id])}"
+			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'favori.label', default: 'Favori')])}"
 			redirect(action: "list")
 		}
 		else {
@@ -80,6 +85,7 @@ class FavoriController {
 				}
 			}
 			favoriInstance.properties = params
+			favoriInstance.dtUpdate=new Date()
 			if (!favoriInstance.hasErrors() && favoriInstance.save(flush: true)) {
 				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'favori.label', default: 'Favori'), favoriInstance.id])}"
 				redirect(action: "show", id: favoriInstance.id)
@@ -98,7 +104,7 @@ class FavoriController {
 		def favoriInstance = Favori.get(params.id)
 		if (favoriInstance) {
 			try {
-				favoriInstance.delete(flush: true)
+				favoriService.deleteFavori(favoriInstance,session.uid)
 				flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'favori.label', default: 'Favori'), params.id])}"
 				redirect(action: "list")
 			}

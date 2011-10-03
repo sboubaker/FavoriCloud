@@ -7,8 +7,12 @@
 <meta name="layout" content="main" />
 <g:set var="entityName"
 	value="${message(code: 'user.label', default: 'User')}" />
-<title><g:message code="default.create.label"
-		args="[entityName]" /></title>
+<title>FCloud</title>
+<script>
+  $(document).ready(function(){
+    $("#loginForm").validate();
+  });
+  </script>
 </head>
 <body>
 	<div class="topbar-wrapper" style="z-index: 5;">
@@ -35,15 +39,15 @@
 				${flash.message}
 			</div>
 		</g:if>
-		<g:form controller="user" action="authenticate">
+		<g:form controller="user" action="authenticate" id="loginForm">
 			<div>
 				<table>
 					<tbody>
 						<tr>
 							<td valign="top"><label for="email"><b><g:message
-											code="user.email.label" default="Email" /> </b> </label>
+											code="user.email.label" default="Email"  /> </b> </label>
 							</td>
-							<td valign="top"><g:textField name="email" />
+							<td valign="top"><g:textField name="email" class="required" />
 							</td>
 						</tr>
 
@@ -52,7 +56,7 @@
 							<td valign="top"><label for="password"><b><g:message
 											code="user.password.label" default="Password" /> </b> </label>
 							</td>
-							<td valign="top"><g:textField name="password" /></td>
+							<td valign="top"><g:passwordField name="password" /></td>
 						</tr>
 					</tbody>
 				</table>

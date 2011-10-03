@@ -6,7 +6,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
-        <title><g:message code="default.edit.label" args="[entityName]" /></title>
+       <title>FCloud</title>
+<script>
+  $(document).ready(function(){
+    $("#editForm").validate({
+  rules: {
+    password: {
+      required: true,
+      minlength: 5
+    }
+  }
+});
+  });
+  </script>
     </head>
     <body>
         <div class="topbar-wrapper" style="z-index: 5;">
@@ -46,49 +58,44 @@
                 <g:renderErrors bean="${userInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form method="post" >
+            <g:form method="post" id="editForm" >
                 <g:hiddenField name="id" value="${userInstance?.id}" />
                 <g:hiddenField name="version" value="${userInstance?.version}" />
                 <div class=>
                     <table>
                         <tbody>
-                        
+                        	 <tr>
+                                <td valign="top" >
+                                  <label for="username"><g:message code="user.username.label" default="Username" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'username', 'errors')}">
+                                    <g:textField name="username" value="${userInstance?.username}" class="required" />
+                                </td>
+                            </tr>
+                            
                              <tr>
                                 <td valign="top" >
                                   <label for="email"><g:message code="user.email.label" default="Email" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'email', 'errors')}">
-                                    <g:textField name="email" value="${userInstance?.email}" />
+                                    <g:textField name="email" value="${userInstance?.email}" class="required email" />
                                 </td>
                             </tr>
-                        
-                            <tr ">
-                                <td valign="top" >
-                                  <label for="enabled"><g:message code="user.enabled.label" default="Enabled" /></label>
-                                </td>
-                                <td valign="top">
-                                    <g:checkBox name="enabled" value="${userInstance?.enabled}" />
-                                </td>
-                            </tr>
-                        
                         
                             <tr>
                                 <td valign="top" >
                                   <label for="password"><g:message code="user.password.label" default="Password" /></label>
                                 </td>
                                 <td valign="top">
-                                    <g:textField name="password" value="${userInstance?.password}" />
+                                    <g:passwordField name="password" value="${userInstance?.password}"  id="password" />
                                 </td>
                             </tr>
-                        
-                            
-                        
                             <tr>
                                 <td valign="top" >
-                                  <label for="username"><g:message code="user.username.label" default="Username" /></label>
+                                  <label for="description"><g:message code="user.description.label" default="Description" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: userInstance, field: 'username', 'errors')}">
-                                    <g:textField name="username" value="${userInstance?.username}" />
+                                <td valign="top">
+                                    <g:textArea name="description" value="${userInstance?.description}" />
                                 </td>
                             </tr>
                         

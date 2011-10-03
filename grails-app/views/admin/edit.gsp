@@ -7,8 +7,7 @@
 <meta name="layout" content="main" />
 <g:set var="entityName"
 	value="${message(code: 'user.label', default: 'User')}" />
-<title><g:message code="default.edit.label" args="[entityName]" />
-</title>
+<title>FCloud</title>
 </head>
 <body>
 	<div class="topbar-wrapper" style="z-index: 5;">
@@ -109,7 +108,13 @@
 							<td valign="top"><g:checkBox name="enabled"
 									value="${userInstance?.enabled}" /></td>
 						</tr>
-
+						<tr>
+							<td valign="top"><label for="deleted"><g:message
+										code="user.deleted.label" default="Deleted" />
+							</label></td>
+							<td valign="top"><g:checkBox name="isdeleted"
+									value="${userInstance?.isdeleted}" /></td>
+						</tr>
 						<tr>
 							<td valign="top"><label for="favoris"><g:message
 										code="user.favoris.label" default="Favoris" />

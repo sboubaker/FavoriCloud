@@ -6,8 +6,7 @@
 <meta name="layout" content="main" />
 <g:set var="entityName"
 	value="${message(code: 'favori.label', default: 'Favori')}" />
-<title><g:message code="default.list.label" args="[entityName]" />
-</title>
+<title>FCloud</title>
 </head>
 <body>
 
@@ -16,21 +15,21 @@
 			<div class="topbar-inner">
 				<div class="container">
 					<h3>
-						<a href="#">FCloud</a>
+						<a href="${createLink(uri: '/')}">FCloud</a>
 					</h3>
 					<ul class="nav">
 						<li><a class="active" href="${createLink(uri: '/')}"><g:message
 									code="default.home.label" /> </a>
 						</li>
 						<li><g:link action="create">
-								<g:message code="default.new.label" args="[entityName]" />
+								<g:message code="new.favori.label" default="New Favori" />
 							</g:link>
 						</li>
 						<li><g:link controller="user" action="show">
 								<g:message code="default.profil.label" default="Profil" />
 							</g:link>
 						</li>
-						<li><g:link controller="user" action="logout">Logout</g:link>
+						<li><g:link controller="user" action="logout"><g:message code="default.deconnection" default="Logout" /></g:link>
 						</li>
 					</ul>
 					<form class="pull-left" action="">
@@ -43,11 +42,11 @@
 		<!-- /topbar -->
 	</div>
 	<div class="container">
-		<h1>
-			<g:message code="default.list.label" args="[entityName]" />
-		</h1>
+		<h2>
+			<g:message code="default.list.favori.label" />
+		</h2>
 		<g:if test="${flash.message}">
-			<div class="message">
+			<div class="alert-message success">
 				${flash.message}
 			</div>
 		</g:if>
@@ -76,10 +75,10 @@
 								${fieldValue(bean: favoriInstance, field: "url")}
 							</td>
 							<td><g:link class="btn" action="edit" id="${favoriInstance.id}">
-									edit
+									<g:message code="default.edit.label" default="Edit" />
 								</g:link></td>
 							<td><g:link class="btn" action="delete" id="${favoriInstance.id}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-									delete
+									<g:message code="default.delete.label" default="Delete" />
 								</g:link>
 							
 							</td>
@@ -89,8 +88,8 @@
 			</table>
 		</div>
 		<div>
-			<g:paginate total="${favoriInstanceTotal}" />
-		</div>
+                <g:paginate max="10"  total="${favoriInstanceTotal}" />
+        </div>
 	</div>
 </body>
 </html>

@@ -6,7 +6,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <title>FCloud</title>
+<script>
+  $(document).ready(function(){
+    $("#createForm").validate({
+  rules: {
+    password: {
+      required: true,
+      minlength: 5
+    }
+  }
+});
+  });
+  </script>
     </head>
     <body>
         <div class="topbar-wrapper" style="z-index: 5;">
@@ -32,7 +44,7 @@
                 <g:renderErrors bean="${userInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" >
+            <g:form action="save" id="createForm" >
                 <div>
                     <table class="zebra-striped">
                         <tbody>
@@ -42,7 +54,7 @@
                                     <label for="username"><g:message code="user.username.label" default="Username" /></label>
                                 </td>
                                 <td valign="top" >
-                                    <g:textField name="username" value="${userInstance?.username}" />
+                                    <g:textField name="username" value="${userInstance?.username}" class="required" />
                                 </td>
                             </tr>
                         
@@ -51,7 +63,7 @@
                                     <label for="email"><g:message code="user.email.label" default="Email" /></label>
                                 </td>
                                 <td valign="top" >
-                                    <g:textField name="email" value="${userInstance?.email}" />
+                                    <g:textField name="email" value="${userInstance?.email}" class="required email" />
                                 </td>
                             </tr>
                         
@@ -62,7 +74,7 @@
                                     <label for="password"><g:message code="user.password.label" default="Password" /></label>
                                 </td>
                                 <td valign="top" >
-                                    <g:textField name="password" value="${userInstance?.password}" />
+                                    <g:passwordField name="password" id="password" value="${userInstance?.password}"/>
                                 </td>
                             </tr>
                         

@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'favori.label', default: 'Favori')}" />
-        <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <title>FCloud</title>
     </head>
     <body>
         <div class="topbar-wrapper" style="z-index: 5;">
@@ -40,7 +40,7 @@
 		<!-- /topbar -->
 	</div>
         <div class="container">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            <h2><g:message code="default.list.favori.label" /></h2>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -77,7 +77,7 @@
                 </table>
             </div>
             <div class="paginateButtons">
-                <g:paginate total="${favoriInstanceTotal}" />
+                <g:paginate  total="${favoriInstanceTotal}" />
             </div>
         </div>
     </body>
