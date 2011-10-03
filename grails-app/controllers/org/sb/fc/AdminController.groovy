@@ -2,6 +2,8 @@ package org.sb.fc
 
 import grails.converters.*
 
+import org.bson.types.ObjectId
+
 class AdminController {
 	
 	def userService
@@ -35,7 +37,7 @@ class AdminController {
     }
 
     def show = {
-        def userInstance = userService.getUserById(params.id)
+        def userInstance = userService.getUserById(ObjectId.massageToObjectId(params.id))
         if (!userInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
             redirect(action: "list")
@@ -46,7 +48,7 @@ class AdminController {
     }
 
     def edit = {
-        def userInstance = userService.getUserById(params.id)
+        def userInstance = userService.getUserById(ObjectId.massageToObjectId(params.id))
         if (!userInstance) {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
             redirect(action: "list")
@@ -57,7 +59,7 @@ class AdminController {
     }
 
     def update = {
-        def userInstance = userService.getUserById(params.id)
+        def userInstance = userService.getUserById(ObjectId.massageToObjectId(params.id))
         if (userInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -84,7 +86,7 @@ class AdminController {
     }
 
     def delete = {
-        def userInstance = userService.getUserById(params.id)
+        def userInstance = userService.getUserById(ObjectId.massageToObjectId(params.id))
         if (userInstance) {
             try {
                 userService.deleteUser(userInstance)

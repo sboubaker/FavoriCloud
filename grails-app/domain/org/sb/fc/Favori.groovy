@@ -6,6 +6,9 @@ class Favori {
 	ObjectId id
 	String title
 	String url
+	Date dtCreate
+	Date dtUpdate
+	boolean isdeleted
 	static belongsTo = [owner:User]
     static constraints = {
 		title(blank:false)

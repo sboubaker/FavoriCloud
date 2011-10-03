@@ -6,7 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'favori.label', default: 'Favori')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <title>FCloud</title>
     </head>
     <body>
         <div class="topbar-wrapper" style="z-index: 5;">
@@ -20,15 +20,12 @@
 						<li><a class="active" href="${createLink(uri: '/')}"><g:message
 									code="default.home.label" /> </a>
 						</li>
-						<li><g:link action="create">
-								<g:message code="default.new.label" args="[entityName]" />
-							</g:link>
-						</li>
+						
 						<li><g:link controller="user" action="show">
 								<g:message code="default.profil.label" default="Profil" />
 							</g:link>
 						</li>
-						<li><g:link controller="user" action="logout">Logout</g:link>
+						<li><g:link controller="user" action="logout"><g:message code="default.deconnection" default="Logout" /></g:link>
 						</li>
 					</ul>
 					<form class="pull-left" action="">
@@ -41,7 +38,7 @@
 		<!-- /topbar -->
 	</div>
         <div class="container">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+            <h2><g:message code="new.favori.label" default="New Favori" /></h2>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -75,8 +72,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div>
+                <div><center>
                     <span><g:submitButton name="create" class="btn" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
+                	</center>
                 </div>
             </g:form>
         </div>

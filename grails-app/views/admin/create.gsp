@@ -7,8 +7,7 @@
 <meta name="layout" content="main" />
 <g:set var="entityName"
 	value="${message(code: 'user.label', default: 'User')}" />
-<title><g:message code="default.create.label"
-		args="[entityName]" /></title>
+<title>FCloud</title>
 </head>
 <body>
 	<div class="topbar-wrapper" style="z-index: 5;">
@@ -125,17 +124,6 @@
 							</td>
 							<td valign="top"><g:checkBox name="passwordExpired"
 									value="${userInstance?.passwordExpired}" />
-							</td>
-						</tr>
-
-						<tr>
-							<td valign="top"><label for="status"><g:message
-										code="user.status.label" default="Status" /> </label>
-							</td>
-							<td valign="top"><g:select name="status"
-									from="${org.sb.fc.Status?.values()}"
-									keys="${org.sb.fc.Status?.values()*.name()}"
-									value="${userInstance?.status?.name()}" />
 							</td>
 						</tr>
 

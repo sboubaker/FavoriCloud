@@ -15,14 +15,15 @@ class UserService {
 	def getUserByUsername(String name) {
 		User.findByUsername(name);
 	}
-	def getUserById(String id) {
-		User.findById(ObjectId.massageToObjectId(id));
+	def getUserById(ObjectId id) {
+		User.findById(id);
 	}
 	def saveUser(User user){
 		user.save(flush: true);
 	}
 	def deleteUser(User user){
-		user.delete(flush: true)
+		user.isdeleted= true
+		user.save(flush: true);
 	}
 	def updateUser(User user){
 		user.update();

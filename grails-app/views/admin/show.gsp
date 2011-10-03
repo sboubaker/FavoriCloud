@@ -6,8 +6,7 @@
 <meta name="layout" content="main" />
 <g:set var="entityName"
 	value="${message(code: 'user.label', default: 'User')}" />
-<title><g:message code="default.show.label" args="[entityName]" />
-</title>
+<title>FCloud</title>
 </head>
 <body>
 	<div class="topbar-wrapper" style="z-index: 5;">
@@ -15,7 +14,7 @@
 			<div class="topbar-inner">
 				<div class="container">
 					<h3>
-						<a href="#">FCloud</a>
+						<a href="${createLink(uri: '/')}">FCloud</a>
 					</h3>
 					<ul class="nav">
 						<li><a class="active" href="${createLink(uri: '/')}"><g:message
@@ -46,9 +45,9 @@
 		<!-- /topbar -->
 	</div>
 	<div class="container">
-		<h1>
+		<h2>
 			<g:message code="default.show.label" args="[entityName]" />
-		</h1>
+		</h2>
 		<g:if test="${flash.message}">
 			<div class="alert-message success">
 				<a class="close" href="#">x</a>
@@ -117,7 +116,14 @@
 								boolean="${userInstance?.enabled}" /></td>
 
 					</tr>
+					<tr>
+						<td valign="top"><g:message code="user.deleted.label"
+								default="Deletd" /></td>
 
+						<td valign="top"><g:formatBoolean
+								boolean="${userInstance?.isdeleted}" /></td>
+
+					</tr>
 					<tr>
 						<td valign="top"><g:message code="user.favoris.label"
 								default="Favoris" /></td>
@@ -172,9 +178,9 @@
 				<g:hiddenField name="id" value="${userInstance?.id}" />
 				<center>
 					<span><g:actionSubmit class="btn" action="edit"
-							value="${message(code: 'default.button.edit.label', default: 'Edit')}" />
+							value="${message(code: 'default.edit.label', default: 'Edit')}" />
 					</span> <span><g:actionSubmit class="btn" action="delete"
-							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+							value="${message(code: 'default.delete.label', default: 'Delete')}"
 							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 					</span>
 				</center>

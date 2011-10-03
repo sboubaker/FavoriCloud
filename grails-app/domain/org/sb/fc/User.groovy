@@ -1,7 +1,6 @@
 package org.sb.fc
 
 import org.sb.fc.Authority
-import org.sb.fc.Status
 
 import org.bson.types.ObjectId
 
@@ -10,10 +9,12 @@ class User {
 	String email
 	String username
 	String password
+	String description
 	boolean enabled
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
+	boolean isdeleted
 	Authority authority
 	static hasMany = [ favoris : Favori ]
 	static constraints = {

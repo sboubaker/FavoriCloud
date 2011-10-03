@@ -7,8 +7,7 @@
 <meta name="layout" content="main" />
 <g:set var="entityName"
 	value="${message(code: 'user.label', default: 'User')}" />
-<title><g:message code="default.create.label"
-		args="[entityName]" /></title>
+<title>FCloud</title>
 </head>
 <body>
 	<div class="topbar-wrapper" style="z-index: 5;">
@@ -52,7 +51,7 @@
 							<td valign="top"><label for="password"><b><g:message
 											code="user.password.label" default="Password" /> </b> </label>
 							</td>
-							<td valign="top"><g:textField name="password" /></td>
+							<td valign="top"><g:passwordField name="password" /></td>
 						</tr>
 					</tbody>
 				</table>

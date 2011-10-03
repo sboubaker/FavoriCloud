@@ -25,9 +25,11 @@ class UserController {
 		userInstance.accountExpired=false
 		userInstance.accountLocked=true
 		userInstance.passwordExpired=false
+		userInstance.isdeleted=false
+		userInstance.description=""
 		userInstance.authority=Authority.USER
 		if (userService.saveUser(userInstance)) {
-			flash.message = "${message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
+			flash.message = "${message(code: 'account.created.message', args: [userInstance.email])}"
 			redirect(action: "login")
 		}
 		else {
@@ -36,9 +38,9 @@ class UserController {
 	}
 
 	def show = {
-		def userInstance = userService.getUserById(params.id)
+		def userInstance = userService.getUserById(session.uid)
 		if (!userInstance) {
-			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
+			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), session.uid])}"
 			redirect(action: "list")
 		}
 		else {
@@ -47,7 +49,7 @@ class UserController {
 	}
 
 	def edit = {
-		def userInstance = userService.getUserById(params.id)
+		def userInstance = userService.getUserById(session.uid)
 		if (!userInstance) {
 			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
 			redirect(action: "list")
@@ -58,7 +60,7 @@ class UserController {
 	}
 
 	def update = {
-		def userInstance = userService.getUserById(params.id)
+		def userInstance = userService.getUserById(session.uid)
 		if (userInstance) {
 			if (params.version) {
 				def version = params.version.toLong()
@@ -95,6 +97,24 @@ class UserController {
 			}
 	  }
 	}
+	def delete = {
+		def userInstance = userService.getUserById(session.uid)
+		if (userInstance) {
+			try {
+				userService.deleteUser(userInstance)
+				flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
+				redirect(action: "list")
+			}
+			catch (org.springframework.dao.DataIntegrityViolationException e) {
+				flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
+				redirect(action: "show", id: params.id)
+			}
+		}
+		else {
+			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
+			redirect(action: "list")
+		}
+	}
 	def authenticate = {
 		User user= userService.getUserByEmail(params.email)
 		if(!user){
@@ -103,6 +123,10 @@ class UserController {
 		if(user){
 			if(user.password == params.password ){
 					if(!user.accountLocked){
+					if(user.isdeleted){
+						flash.message = "${message(code: 'error.account.notfound')}"
+						redirect(action: "login")
+					}else{
 					session.username = user.username
 					session.authority = user.authority
 					session.uid = user.id
@@ -110,6 +134,7 @@ class UserController {
 						redirect(controller: "favori", action: "list",id: session.uid)
 					}else{
 						redirect(controller: "admin", action: "list")
+					}
 					}
 					}else{
 					flash.message = "${message(code: 'error.account.locked')}"
