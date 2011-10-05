@@ -8,11 +8,6 @@
 <g:set var="entityName"
 	value="${message(code: 'user.label', default: 'User')}" />
 <title>FCloud</title>
-<script>
-  $(document).ready(function(){
-    $("#loginForm").validate();
-  });
-  </script>
 </head>
 <body>
 	<div class="topbar-wrapper" style="z-index: 5;">
@@ -35,10 +30,15 @@
 			</h2>
 		</center>
 		<g:if test="${flash.message}">
-			<div class="message">
+			<div class="alert-message succes">
 				${flash.message}
 			</div>
 		</g:if>
+		<g:if test="${flash.error}">
+                 <div class="alert-message error">
+                    ${flash.error}
+                 </div>
+        </g:if>
 		<g:form controller="user" action="authenticate" id="loginForm">
 			<div>
 				<table>
@@ -47,7 +47,7 @@
 							<td valign="top"><label for="email"><b><g:message
 											code="user.email.label" default="Email"  /> </b> </label>
 							</td>
-							<td valign="top"><g:textField name="email" class="required" />
+							<td valign="top"><g:textField name="email"/>
 							</td>
 						</tr>
 

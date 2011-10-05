@@ -13,11 +13,10 @@ class FavoriService {
 
 	def userService
 	
-	def saveFavori(Favori favori ,ObjectId id){
+	def saveFavori(Favori favori,ObjectId id){
 		User user= User.findById(id);
+		favori.owner=user;
 		favori.save(flush: true);
-		user.addToFavoris(favori);
-		userService.saveUser(user);
 	}
 	def updateUser(User favori){
 		favori.update();
@@ -36,6 +35,6 @@ class FavoriService {
 		Favori.list(map);
 	}
 	def countByUserId(ObjectId id){
-		User.findById(id)?.favoris?.count { it.isdeleted == false }
+		User.findById(id)?.favoris?.findAll { it.isdeleted == false }.size()
 	}
 }

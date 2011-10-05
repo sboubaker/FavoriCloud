@@ -12,6 +12,15 @@ class UserFilters {
             }
            
         }
+		userUserCkeck(controller:'api', action:'(list|delete|save)') {
+			before = {
+				if(! (session.username && session.authority == Authority.USER)) {
+					render(contentType: "text/json") {json = [msg:'nauth']}
+					return false
+				  }
+			}
+		   
+		}
 		rootUserCkeck(controller:'admin', action:'*') {
 			before = {
 				if(! (session.username && session.authority == Authority.ROOT)) {
@@ -30,7 +39,7 @@ class UserFilters {
 			}
 			
 		}
-		userFavoriCkeck(controller:'favori', action:'(index|show|list|edit|update|delete)') {
+		userFavoriCkeck(controller:'favori', action:'(index|list|edit|update|delete|save)') {
 			before = {
 				if(! (session.username && session.authority == Authority.USER)) {
 					redirect(controller:"user", action:"login")

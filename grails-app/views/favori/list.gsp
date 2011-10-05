@@ -59,6 +59,8 @@
 							title="${message(code: 'favori.title.label', default: 'Title')}" />
 						<g:sortableColumn property="url"
 							title="${message(code: 'favori.url.label', default: 'Url')}" />
+							<g:sortableColumn property="dtUpdate"
+							title="${message(code: 'favori.date.label', default: 'Date')}" />
 						<th width="10%"/>
 						<th width="10%"/>
 						
@@ -73,6 +75,8 @@
 
 							<td>
 								${fieldValue(bean: favoriInstance, field: "url")}
+							</td>
+							<td> <g:formatDate format="yyyy-MM-dd" date="${favoriInstance.dtUpdate}"/>
 							</td>
 							<td><g:link class="btn" action="edit" id="${favoriInstance.id}">
 									<g:message code="default.edit.label" default="Edit" />

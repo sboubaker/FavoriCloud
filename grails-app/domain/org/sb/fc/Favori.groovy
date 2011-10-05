@@ -12,7 +12,7 @@ class Favori {
 	static belongsTo = [owner:User]
     static constraints = {
 		title(blank:false)
-		url(blank:false)
+		url(blank:false,url:true)
     }
 	
 }

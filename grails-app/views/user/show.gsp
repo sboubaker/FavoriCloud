@@ -49,8 +49,8 @@
 				<tbody>
 
 					<tr>
-						<td valign="top"><g:message code="user.username.label"
-								default="Username" />
+						<td valign="top"><b><g:message code="user.username.label"
+								default="Username" /></b>
 						</td>
 
 						<td valign="top">
@@ -59,8 +59,8 @@
 
 					</tr>
 					<tr>
-						<td valign="top"><g:message code="user.email.label"
-								default="Email" />
+						<td valign="top"><b><g:message code="user.email.label"
+								default="Email" /></b>
 						</td>
 
 						<td valign="top">
@@ -70,8 +70,8 @@
 					</tr>
 
 					<tr>
-						<td valign="top"><g:message code="user.password.label"
-								default="Password" />
+						<td valign="top"><b><g:message code="user.password.label"
+								default="Password" /></b>
 						</td>
 
 						<td valign="top">
@@ -80,8 +80,8 @@
 
 					</tr>
 					<tr>
-						<td valign="top"><g:message code="user.description.label"
-								default="Description" />
+						<td valign="top"><b><g:message code="user.description.label"
+								default="Description" /></b>
 						</td>
 
 						<td valign="top">

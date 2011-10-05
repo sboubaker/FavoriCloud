@@ -1,5 +1,3 @@
-
-
 <%@ page import="org.sb.fc.Favori"%>
 <html>
 <head>
@@ -20,13 +18,16 @@
 					</h3>
 					<ul class="nav">
 						<li><a class="active" href="${createLink(uri: '/')}"><g:message
-									code="default.home.label" /> </a></li>
+									code="default.home.label" /> </a>
+						</li>
 						<li><g:link action="create">
 								<g:message code="default.new.label" args="[entityName]" />
-							</g:link></li>
+							</g:link>
+						</li>
 						<li><g:link controller="user" action="show">
 								<g:message code="default.profil.label" default="Profil" />
-							</g:link></li>
+							</g:link>
+						</li>
 						<li><g:link controller="user" action="logout">Logout</g:link>
 						</li>
 					</ul>
@@ -44,14 +45,16 @@
 			<g:message code="default.edit.label" />
 		</h2>
 		<g:if test="${flash.message}">
-			<div class="message">
+			<div class="alert-message succes">
 				${flash.message}
 			</div>
 		</g:if>
 		<g:hasErrors bean="${favoriInstance}">
-			<div class="errors">
-				<g:renderErrors bean="${favoriInstance}" as="list" />
-			</div>
+			<g:eachError>
+				<p class="alert-message error">
+					<g:message error="${it}" />
+				</p>
+			</g:eachError>
 		</g:hasErrors>
 		<g:form method="post">
 			<g:hiddenField name="id" value="${favoriInstance?.id}" />
@@ -61,19 +64,23 @@
 					<tbody>
 
 						<tr>
-							<td valign="top"><label for="title"><g:message
-										code="favori.title.label" default="Title" />
-							</label></td>
+							<td valign="top"><label for="title"><b><g:message
+											code="favori.title.label" default="Title" />
+								</b> </label>
+							</td>
 							<td valign="top"><g:textField name="title"
-									value="${favoriInstance?.title}" /></td>
+									value="${favoriInstance?.title}" />
+							</td>
 						</tr>
 
 						<tr>
-							<td valign="top"><label for="url"><g:message
-										code="favori.url.label" default="Url" />
-							</label></td>
+							<td valign="top"><label for="url"><b><g:message
+											code="favori.url.label" default="Url" />
+								</b> </label>
+							</td>
 							<td valign="top"><g:textField name="url"
-									value="${favoriInstance?.url}" /></td>
+									value="${favoriInstance?.url}" />
+							</td>
 						</tr>
 
 					</tbody>
@@ -82,8 +89,8 @@
 			<div>
 				<center>
 					<span><g:actionSubmit class="btn" action="update"
-							value="${message(code: 'default.ok.label', default: 'Ok')}" />
-					</span> <span><g:actionSubmit class="btn" action="delete"
+							value="${message(code: 'default.ok.label', default: 'Ok')}" /> </span>
+					<span><g:actionSubmit class="btn" action="delete"
 							value="${message(code: 'default.delete.label', default: 'Delete')}"
 							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 					</span>

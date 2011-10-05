@@ -132,7 +132,7 @@
 							<ul>
 								<g:each in="${userInstance.favoris}" var="f">
 									<li><g:link controller="favori" action="show" id="${f.id}">
-											${f?.encodeAsHTML()}
+											${f?.title}
 										</g:link></li>
 								</g:each>
 							</ul>

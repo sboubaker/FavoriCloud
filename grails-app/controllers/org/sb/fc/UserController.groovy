@@ -21,19 +21,25 @@ class UserController {
 
 	def save = {
 		def userInstance = new User(params)
-		userInstance.enabled=true
-		userInstance.accountExpired=false
-		userInstance.accountLocked=true
-		userInstance.passwordExpired=false
-		userInstance.isdeleted=false
-		userInstance.description=""
-		userInstance.authority=Authority.USER
-		if (userService.saveUser(userInstance)) {
-			flash.message = "${message(code: 'account.created.message', args: [userInstance.email])}"
-			redirect(action: "login")
-		}
-		else {
-			render(view: "create", model: [userInstance: userInstance])
+		if(userService.getUserByEmail(userInstance.email) || userService.getUserByUsername(userInstance.username)){
+			flash.message = "${message(code: 'error.mail.existe')}"
+			redirect(action: "create")
+		}else{
+			userInstance.enabled=true
+			userInstance.accountExpired=false
+			userInstance.accountLocked=true
+			userInstance.passwordExpired=false
+			userInstance.isdeleted=false
+			userInstance.description=""
+			userInstance.authority=Authority.USER
+			
+			if (userService.saveUser(userInstance)) {
+				flash.message = "${message(code: 'account.created.message', args: [userInstance.email])}"
+				redirect(action: "login")
+			}
+			else {
+				render(view: "create", model: [userInstance: userInstance])
+			}
 		}
 	}
 
@@ -93,9 +99,9 @@ class UserController {
 			if(session.authority == Authority.USER){
 				redirect(controller: "favori", action: "list",id: session.uid)
 			}else{
-			redirect(controller: "admin", action: "list")
+				redirect(controller: "admin", action: "list")
 			}
-	  }
+		}
 	}
 	def delete = {
 		def userInstance = userService.getUserById(session.uid)
@@ -118,35 +124,34 @@ class UserController {
 	def authenticate = {
 		User user= userService.getUserByEmail(params.email)
 		if(!user){
-		user= userService.getUserByUsername(params.email)
+			user= userService.getUserByUsername(params.email)
 		}
 		if(user){
 			if(user.password == params.password ){
-					if(!user.accountLocked){
+				if(!user.accountLocked){
 					if(user.isdeleted){
-						flash.message = "${message(code: 'error.account.notfound')}"
+						flash.error = "${message(code: 'error.account.notfound')}"
 						redirect(action: "login")
 					}else{
-					session.username = user.username
-					session.authority = user.authority
-					session.uid = user.id
-					if(session.authority== Authority.USER){
-						redirect(controller: "favori", action: "list",id: session.uid)
-					}else{
-						redirect(controller: "admin", action: "list")
-					}
-					}
-					}else{
-					flash.message = "${message(code: 'error.account.locked')}"
-					redirect(action: "login")
+						session.username = user.username
+						session.authority = user.authority
+						session.uid = user.id
+						if(session.authority== Authority.USER){
+							redirect(controller: "favori", action: "list",id: session.uid)
+						}else{
+							redirect(controller: "admin", action: "list")
+						}
 					}
 				}else{
-					flash.message = "${message(code: 'error.password.message')}"
+					flash.error = "${message(code: 'error.account.locked')}"
 					redirect(action: "login")
 				}
-			
+			}else{
+				flash.error = "${message(code: 'error.password.message')}"
+				redirect(action: "login")
+			}
 		}else{
-			flash.message = "${message(code: 'error.email.message')}"
+			flash.error = "${message(code: 'error.email.message')}"
 			redirect(action: "login")
 		}
 	}

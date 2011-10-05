@@ -15,14 +15,12 @@ class FavoriController {
 	}
 
 	def list = {
-		//params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		println favoriService.listFavorisByUserId(session.uid)
-		[favoriInstanceList: favoriService.listFavorisByUserId(session.uid), favoriInstanceTotal: favoriService.countByUserId(session.uid)]
-		/*if(params.json && params.json == "json"){
+		def data=[favoriInstanceList: favoriService.listFavorisByUserId(session.uid), favoriInstanceTotal: favoriService.countByUserId(session.uid)]
+		if(params.json && params.json == "json"){
 			render(contentType: "text/json") {json = data}
 		}else{
 			data
-		}*/
+		}
 	}
 	def listall = {
 		params.max = Math.min(params.max ? params.int('max') : 10, 100)
@@ -40,6 +38,9 @@ class FavoriController {
 		favoriInstance.dtUpdate=new Date()
 		favoriInstance.isdeleted=false
 		if (favoriService.saveFavori(favoriInstance,session.uid)) {
+			User user= User.findById(session.uid);
+			user.addToFavoris(favoriInstance);
+			userService.saveUser(user);
 			flash.message = "${message(code: 'default.created.message', args: [message(code: 'favori.label', default: 'Favori')])}"
 			redirect(action: "list")
 		}

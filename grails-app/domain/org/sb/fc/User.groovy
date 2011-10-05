@@ -18,9 +18,9 @@ class User {
 	Authority authority
 	static hasMany = [ favoris : Favori ]
 	static constraints = {
-		email blank: false, unique: true
+		email blank: false, unique: true,email:true
 		username blank: false, unique: true
-		password blank: false
+		password blank: false,minSize:5
 	}
 
 	static mapping = {
